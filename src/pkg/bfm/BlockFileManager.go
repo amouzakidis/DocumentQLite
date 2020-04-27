@@ -1,0 +1,5 @@
+package bfm
+
+func test() {
+
+}

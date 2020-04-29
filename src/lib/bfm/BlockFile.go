@@ -6,22 +6,22 @@ import (
 
 //BlockFile is a representation of a BlockFile
 type BlockFile struct {
-	fileName  string
-	fp        *os.File
-	blockSize int64
-	err       error
+	FileName  string
+	Fp        *os.File
+	BlockSize int64
+	Err       error
 }
 
 //CreateFile creates an empty BlockFile at he disc
 func (blockFile BlockFile) CreateFile() {
-	blockFile.fp, blockFile.err = os.Create(blockFile.fileName)
+	blockFile.Fp, blockFile.Err = os.Create(blockFile.FileName)
 }
 
 //OpenFile open a file, if it does not exist it will be created
 func (blockFile BlockFile) OpenFile() {
 	_, err := os.Stat("file-exists.go")
 	if os.IsExist(err) {
-		blockFile.fp, blockFile.err = os.Open(blockFile.fileName)
+		blockFile.Fp, blockFile.Err = os.Open(blockFile.FileName)
 	} else {
 		blockFile.CreateFile()
 	}
@@ -29,14 +29,14 @@ func (blockFile BlockFile) OpenFile() {
 
 //WriteBytes writes a byte slice at the index i * blockSize
 func (blockFile BlockFile) WriteBytes(data []byte, index int64) {
-	blockFile.fp.Seek(blockFile.blockSize*index, 0)
-	blockFile.fp.Write(data)
+	blockFile.Fp.Seek(blockFile.BlockSize*index, 0)
+	blockFile.Fp.Write(data)
 }
 
 //ReadBytes reads a byte slice from the index i * blockSize
 func (blockFile BlockFile) ReadBytes(data []byte, index int64) int {
-	blockFile.fp.Seek(blockFile.blockSize*index, 0)
+	blockFile.Fp.Seek(blockFile.BlockSize*index, 0)
 	var n int
-	n, blockFile.err = blockFile.fp.Read(data)
+	n, blockFile.Err = blockFile.Fp.Read(data)
 	return n
 }

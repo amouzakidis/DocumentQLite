@@ -1,5 +1,0 @@
-package bfm
-
-func test() {
-
-}
